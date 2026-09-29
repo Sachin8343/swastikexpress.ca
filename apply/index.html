@@ -3,36 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Driver Application – Swastik Express</title>
-<meta http-equiv="refresh" content="0; url=https://portal.swastikexpress.ca/apply">
-<link rel="canonical" href="https://portal.swastikexpress.ca/apply">
+<title>Independent Contractor Driver Application – Swastik Express</title>
 <style>
   * { box-sizing: border-box; }
-  body {
+  html, body {
+    margin: 0; padding: 0; height: 100%; background: #F1F5F9;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #F1F5F9; color: #1E293B; margin: 0; padding: 24px 16px;
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
   }
-  .card {
-    max-width: 420px; width: 100%; background: #fff; border-radius: 14px;
-    box-shadow: 0 2px 16px rgba(0,0,0,.06); padding: 36px 28px; text-align: center;
+  #app-frame {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    border: none; display: block;
   }
-  .spinner {
-    width: 36px; height: 36px; border: 3px solid #e0e0e0; border-top-color: #1B5E20;
-    border-radius: 50%; margin: 0 auto 18px; animation: spin 0.8s linear infinite;
+  #fallback {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: #F1F5F9; color: #666; font-size: 14px; text-align: center; padding: 24px;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  h1 { font-size: 17px; margin: 0 0 8px; color: #1B5E20; }
-  p { font-size: 14px; color: #666; margin: 0 0 18px; }
-  a { color: #1B5E20; font-weight: 600; }
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="spinner"></div>
-  <h1>Taking you to the application form…</h1>
-  <p>If you are not redirected automatically,<br><a href="https://portal.swastikexpress.ca/apply">click here</a>.</p>
-</div>
-<script>window.location.replace("https://portal.swastikexpress.ca/apply");</script>
+<div id="fallback">Loading the application form…</div>
+<iframe id="app-frame" title="Independent Contractor Driver Application"
+        src="https://portal.swastikexpress.ca/apply"
+        onload="document.getElementById('fallback').style.display='none';">
+</iframe>
 </body>
 </html>
