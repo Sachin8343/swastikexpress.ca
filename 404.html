@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<title>Swastik Express</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; background: #F1F5F9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  #app-frame {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    border: none; display: none;
+  }
+  #not-found {
+    display: none; min-height: 100%; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center; padding: 24px;
+  }
+  #not-found h1 { color: #1B5E20; font-size: 20px; margin: 0 0 10px; }
+  #not-found p { color: #666; font-size: 14px; }
+  #not-found a { color: #1B5E20; font-weight: 600; }
+  #fallback {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: #F1F5F9; color: #666; font-size: 14px; text-align: center; padding: 24px;
+  }
+</style>
+</head>
+<body>
+<div id="fallback">Loading…</div>
+<iframe id="app-frame" title="Swastik Express"
+        onload="document.getElementById('fallback').style.display='none';"></iframe>
+<div id="not-found">
+  <h1>Page Not Found</h1>
+  <p>That page doesn't exist. <a href="/">Go to swastikexpress.ca</a></p>
+</div>
+<script>
+  // Routes that live on the portal but need to appear under swastikexpress.ca.
+  // Each pattern maps a path here to the matching path on the real portal.
+  var routes = [
+    { pattern: /^\/agreement\/sign\/([^\/]+)\/?$/, portalPath: function(m) { return '/agreement/sign/' + m[1]; } }
+  ];
+
+  var path = window.location.pathname;
+  var matched = null;
+  for (var i = 0; i < routes.length; i++) {
+    var m = path.match(routes[i].pattern);
+    if (m) { matched = routes[i].portalPath(m); break; }
+  }
+
+  if (matched) {
+    document.getElementById('app-frame').src = 'https://portal.swastikexpress.ca' + matched + window.location.search;
+    document.getElementById('app-frame').style.display = 'block';
+  } else {
+    document.getElementById('fallback').style.display = 'none';
+    document.getElementById('not-found').style.display = 'flex';
+  }
+</script>
+</body>
+</html>
